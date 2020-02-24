@@ -1,0 +1,30 @@
+This is the basic SQL Injection challenge wherein we are provided with a login form.
+
+The challenge is to bypass the login page and read the flag.
+
+If we pass a single quote (') as username we get an error message like this:
+
+You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near "' AND password = '" at line 1
+
+The debug information shows it is a MySQL sever.
+The SQL check should be like this:
+
+
+WHERE username = form_input_username AND password = form_input_password;
+
+
+We can make this statement true by supplying this query in the username form field:
+
+
+' OR 1=1#
+
+
+Which makes the above mentioned query like this:
+
+
+WHERE username = '' OR 1 = 1# AND password = form_input_password;
+
+
+Since 1 = 1 is always true, we can bypass the login check and get the flag.
+
+NOTE: the '#' symbol means a comment in MySQL database so the password check is commented out when we supply # in our input.
